@@ -98,6 +98,35 @@ O sistema implementa o ciclo de vida completo do [COLOCAR AQUI: Ex: Produto]:
 
 ---
 
+## ✨ Próximas Melhorias (Roadmap)
+
+Esta seção lista as funcionalidades e aprimoramentos técnicos planejados para o projeto, visando maior robustez, manutenibilidade e qualidade de código.
+
+### 1. 🐳 Contêineres e Implantação (DevOps)
+O principal objetivo é facilitar a execução do projeto em qualquer ambiente, eliminando problemas de compatibilidade e instalação de dependências.
+
+Dockerização da API (.NET): Criar um Dockerfile para empacotar o Back-end .NET. Isso garante que a API rode em um contêiner isolado, facilitando a implantação em serviços como Azure, AWS, ou em ambientes de CI/CD.
+
+Docker Compose: Configurar o docker-compose.yml para subir a API (.NET) e o Front-end (Angular) simultaneamente com um único comando, simulando o ambiente de produção localmente.
+
+### 2. 🧪 Qualidade e Testes (Front-end)
+A inclusão de testes unitários e de integração é fundamental para garantir que futuras modificações no Front-end não quebrem funcionalidades existentes.
+
+Testes Unitários: Implementar testes unitários para os Services (ex: ProductService) e a lógica dos Components (ex: ProductFormComponent e ProductListComponent), utilizando o Jasmine e o Karma (ou Jest, se preferir).
+
+Testes de Componentes (Integração): Testar a renderização e interação dos componentes do PO UI (como po-table e po-page-default) para garantir que a interface se comporte conforme o esperado.
+
+### 3. ✨ Experiência do Usuário (Template e PO UI)
+Melhorias visuais e de interação que tornam a aplicação mais polida e profissional.
+
+Refatoração do Template: Ajustar o layout principal para otimizar a usabilidade, talvez utilizando um po-menu lateral para futura expansão.
+
+Padronização de Modais: Substituir implementações manuais de modais por componentes padronizados do PO UI (como po-modal ou po-dialog) para todas as interações de confirmação (ex: na deleção de produtos).
+
+Melhoria na Exibição da Imagem: Exibir a imagem do produto (Base64) em uma coluna dedicada da po-table, utilizando um po-image ou um custom cell, ao invés de apenas na pré-visualização do formulário.
+
+---
+
 ## 🤝 Autor
 
 | Nome | GitHub |
