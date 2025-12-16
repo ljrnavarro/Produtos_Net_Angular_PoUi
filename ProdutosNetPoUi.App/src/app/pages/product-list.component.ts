@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 
 import { 
-  PoPageDefault, // Componente de página standalone
-  PoTableModule, // Módulo de tabela
+  PoPageDefault, 
+  PoTableModule, 
   PoTableColumn, 
   PoPageAction,
   PoNotificationService, 
@@ -16,13 +16,12 @@ import {
   PoTableColumnLabel //
 } from '@po-ui/ng-components'; 
 
-// Serviço e Modelo (Ajuste o caminho se necessário)
 import { Produto, ProductService } from '../services/produto.service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  // O array imports DEVE usar os aliases Standalone
+
   imports: [
     CommonModule,
     PoTableModule,
@@ -31,7 +30,7 @@ import { Produto, ProductService } from '../services/produto.service';
     PoButtonModule
   ],
   templateUrl: './product-list.component.html',
-  // styleUrls: [/* Removido para evitar erro de arquivo não encontrado */]
+  
 })
 export class ProductListComponent implements OnInit {
   
@@ -132,7 +131,7 @@ confirmDeleteProduct(item: Produto): void {
     this.productService.deleteProduct(id).subscribe({
         next: () => {
             this.poNotification.success('Produto excluído com sucesso!');
-            this.getProducts(); // Recarrega a lista
+            this.getProducts(); 
         },
         error: (err) => {
             this.poNotification.error('Erro ao excluir produto. Verifique sua API e o console.');

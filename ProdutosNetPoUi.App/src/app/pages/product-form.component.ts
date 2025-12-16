@@ -72,7 +72,6 @@ export class ProductFormComponent implements OnInit {
         required: true,
         gridColumns: 6
       }
-      // 🛑 Campo de imagem removido daqui. Será usado o componente po-upload.
     ];
   }
 
@@ -97,18 +96,15 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  // 💡 NOVO MÉTODO: Converte o arquivo selecionado em Base64
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
     
-    // ✅ console.log para confirmar o disparo
     console.log('Evento Disparado com Input Nativo! Objeto File recebido:', file);
     
     if (file) {
         const reader = new FileReader();
 
         reader.onload = (e: any) => {
-            // Assumindo que a propriedade correta é 'image'
             this.product.image = this.extractBase64(e.target.result as string);
         };
         
@@ -116,10 +112,8 @@ export class ProductFormComponent implements OnInit {
     }
 }
 
-  // 💡 NOVO MÉTODO: Extrai a string Base64 sem o prefixo do MIME type
   private extractBase64(base64String: string): string {
     const parts = base64String.split(';base64,');
-    // Retorna apenas a parte da string Base64 pura
     return parts.length > 1 ? parts[1] : base64String;
   }
 
