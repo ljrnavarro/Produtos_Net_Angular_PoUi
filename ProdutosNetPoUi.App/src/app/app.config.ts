@@ -7,13 +7,13 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 // Importar os componentes Standalone
 import { ProductListComponent } from './pages/product-list.component'; 
-//import { ProductFormComponent } from './pages/product-form/product-form.component'; 
+import { ProductFormComponent } from './pages/product-form.component'; 
 
 // Definição das rotas
 const routes: Routes = [
   { path: 'produtos', component: ProductListComponent },
- // { path: 'produtos/novo', component: ProductFormComponent }, 
- // { path: 'produtos/editar/:id', component: ProductFormComponent }, 
+  { path: 'produtos/novo', component: ProductFormComponent }, 
+  { path: 'produtos/editar/:id', component: ProductFormComponent }, 
   { path: '', redirectTo: 'produtos', pathMatch: 'full' }
 ];
 

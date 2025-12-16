@@ -25,5 +25,21 @@ export class ProductService {
     return this.http.get<Produto[]>(this.apiUrl);
   }
 
-  // ... (Outros métodos CRUD virão depois)
+  getProductById(id: number): Observable<Produto> {    
+    return this.http.get<Produto>(`${this.apiUrl}/${id}`);
+  }
+ 
+  createProduct(produto: Produto): Observable<Produto> {
+       return this.http.post<Produto>(this.apiUrl, produto);
+  }
+
+   updateProduct(produto: Produto): Observable<Produto> {
+    return this.http.put<Produto>(`${this.apiUrl}`, produto);
+  }
+  
+  deleteProduct(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;   
+    return this.http.delete<void>(url);
+  }
+ 
 }

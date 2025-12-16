@@ -1,0 +1,12 @@
+<po-page-default
+  [p-title]="isEdit ? 'Editar Produto: ' + product.descricao : 'Novo Produto'"
+  [p-actions]="pageActions">
+  
+  <po-dynamic-form
+    [p-fields]="fields"
+    [p-value]="product"
+    p-auto-load="true"
+    (p-submit)="save()">
+  </po-dynamic-form>
+
+</po-page-default>

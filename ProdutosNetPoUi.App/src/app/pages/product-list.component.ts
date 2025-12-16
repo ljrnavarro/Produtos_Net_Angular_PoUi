@@ -1,10 +1,8 @@
-// src/app/pages/product-list/product-list.component.ts (CORRIGIDO)
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-// ✅ CORRETO: Importando os aliases Standalone do PO UI
+
 import { 
   PoPageDefault, // Componente de página standalone
   PoTableModule, // Módulo de tabela
@@ -12,7 +10,10 @@ import {
   PoPageAction,
   PoNotificationService, 
   PoDialogService,
-  PoPageModule
+  PoPageModule,
+  PoIconModule,
+  PoButtonModule,
+  PoTableColumnLabel //
 } from '@po-ui/ng-components'; 
 
 // Serviço e Modelo (Ajuste o caminho se necessário)
@@ -25,7 +26,9 @@ import { Produto, ProductService } from '../services/produto.service';
   imports: [
     CommonModule,
     PoTableModule,
-    PoPageModule
+    PoPageModule,
+    PoIconModule,
+    PoButtonModule
   ],
   templateUrl: './product-list.component.html',
   // styleUrls: [/* Removido para evitar erro de arquivo não encontrado */]
@@ -71,31 +74,41 @@ export class ProductListComponent implements OnInit {
           { value: 'false', label: 'Não', color: 'color-07', icon: 'po-icon-not-found' }
         ]
       },
-      { 
-        property: 'actions', 
-        label: 'Ações', 
-        type: 'icon', 
-        icons: [
-        //  { action: this.editProduct.bind(this), icon: 'po-icon-edit', tooltip: 'Editar Produto' },
-        //  { action: this.confirmDeleteProduct.bind(this), icon: 'po-icon-delete', tooltip: 'Excluir Produto', color: 'color-07' }
-        ]
-      }
+      {
+    property: 'columnIcon',
+      label: 'Actions',
+      type: 'icon',      
+      icons: [
+        {
+          icon: 'po-icon-edit', 
+          color: 'color-04',
+          tooltip: 'Editar Produto',
+          value: 'edit',
+          action: this.editProduct.bind(this)
+        },
+        {
+          icon: 'po-icon-delete', 
+          color: 'color-07',
+          tooltip: 'Excluir Produto',
+          value: 'delete',
+          action: this.confirmDeleteProduct.bind(this)
+        }
+      ]
+    }
     ];
   }
 
   setupActions(): void {
     this.pageActions = [
-    //  { label: 'Novo Produto', action: this.goToNewProduct.bind(this), icon: 'po-icon-plus' },
-      { label: 'Atualizar Lista', action: this.getProducts.bind(this), icon: 'po-icon-refresh' }
+        { label: 'Novo Produto', icon: 'po-icon-plus' , action: this.goToNewProduct.bind(this) },
+        { label: 'Atualizar Lista', action: this.getProducts.bind(this), icon: 'po-icon-refresh' }
     ];
-  }
-
-  // --- Lógica de Chamada da API ---
+}
 
   getProducts(): void {
     this.productService.getProducts().subscribe({
       next: (data: Produto[]) => {
-        this.products = data.map(p => ({ ...p, imageStatus: !!p.imagemBase64 }));
+        this.products = data.map(p => ({ ...p, imageStatus: !!p.imagemBase64 , columnIcon: ['add', 'edit', 'delete']}));
         this.poNotification.success(`Lista de produtos carregada. Total: ${data.length}`);
       },
       error: (err) => {
@@ -105,8 +118,28 @@ export class ProductListComponent implements OnInit {
       }
     });
   }
-/*
-  // --- Lógica de Navegação/CRUD ---
+
+confirmDeleteProduct(item: Produto): void {
+  this.poDialog.confirm({
+      title: 'Confirmação de Exclusão',
+      message: `Deseja realmente excluir o produto: ${item.descricao}?`,
+      confirm: () => this.deleteProduct(item.id), 
+      cancel: () => {} 
+  });
+}
+
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe({
+        next: () => {
+            this.poNotification.success('Produto excluído com sucesso!');
+            this.getProducts(); // Recarrega a lista
+        },
+        error: (err) => {
+            this.poNotification.error('Erro ao excluir produto. Verifique sua API e o console.');
+            console.error('Erro de exclusão:', err);
+        }
+    });
+}
 
   goToNewProduct(): void {
     this.router.navigate(['/produtos/novo']);
@@ -115,27 +148,4 @@ export class ProductListComponent implements OnInit {
   editProduct(item: Produto): void {
     this.router.navigate(['/produtos/editar', item.id]);
   }
-
-  confirmDeleteProduct(item: Produto): void {
-    this.poDialog.confirm({
-      title: 'Confirmação de Exclusão',
-      message: `Deseja realmente excluir o produto: ${item.descricao}?`,
-      confirm: () => this.deleteProduct(item.id),
-      cancel: () => {}
-    });
-  }
-
-  deleteProduct(id: number): void {
-    // ⚠️ Implementar o método deleteProduct no ProductService
-    this.productService.deleteProduct(id).subscribe({
-      next: () => {
-        this.poNotification.success('Produto excluído com sucesso!');
-        this.getProducts();
-      },
-      error: () => {
-        this.poNotification.error('Erro ao excluir produto.');
-      }
-    });
-  }
-    */
 }
