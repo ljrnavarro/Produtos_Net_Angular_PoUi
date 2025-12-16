@@ -108,7 +108,7 @@ export class ProductListComponent implements OnInit {
   getProducts(): void {
     this.productService.getProducts().subscribe({
       next: (data: Produto[]) => {
-        this.products = data.map(p => ({ ...p, imageStatus: !!p.imagemBase64 , columnIcon: ['add', 'edit', 'delete']}));
+        this.products = data.map(p => ({ ...p, imageStatus: !!p.image , columnIcon: ['add', 'edit', 'delete']}));
         this.poNotification.success(`Lista de produtos carregada. Total: ${data.length}`);
       },
       error: (err) => {

@@ -5,6 +5,7 @@ using ProdutosNetPoUi.Domain.Handlers.Contracts;
 using ProdutosNetPoUi.Domain.Repositories;
 using Flunt.Notifications;
 using ProdutosNetPoUi.Domain.Commands.ProdutoCommands;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ProdutosNetPoUi.Domain.Handlers
 {
@@ -47,6 +48,7 @@ namespace ProdutosNetPoUi.Domain.Handlers
             var produto = _repository.GetByUser(command.Id);
             produto.Descricao = command.Descricao;
             produto.Preco = command.Preco;
+            produto.Image = command.Image;
 
             _repository.Update(produto);
 

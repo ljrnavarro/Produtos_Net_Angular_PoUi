@@ -9,7 +9,7 @@ export interface Produto {
   id: number;
   descricao: string;
   preco: number;
-  imagemBase64: string;
+  image: string;
 }
 
 @Injectable({

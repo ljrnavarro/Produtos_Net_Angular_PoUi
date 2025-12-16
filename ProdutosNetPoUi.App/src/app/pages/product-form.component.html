@@ -8,5 +8,23 @@
     p-auto-load="true"
     (p-submit)="save()">
   </po-dynamic-form>
+  
+  
+<label style="display: block; margin-top: 15px; font-weight: bold;">
+    Imagem do Produto
+</label>
+
+<input 
+    type="file" 
+    accept="image/*" 
+    (change)="handleFileInput($event)" 
+    style="margin-top: 5px;"
+>
+
+<div *ngIf="product.image" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;">
+  <h3>Pré-visualização:</h3>
+  <img [src]="'data:image/jpeg;base64,' + product.image" style="max-width: 200px; height: auto;">
+</div>
+
 
 </po-page-default>

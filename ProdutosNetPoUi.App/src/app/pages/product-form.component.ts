@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { 
-  PoPageDefault, // Componente de página standalone
-  PoTableModule, // Módulo de tabela
+  PoPageDefault, 
+  PoTableModule, 
   PoDynamicModule, 
   PoDynamicFormField, 
   PoNotificationService, 
   PoPageAction,
-  PoPageModule 
+  PoPageModule,
+  PoUploadComponent,
+  PoFieldModule,
+  PoButtonModule
 } from '@po-ui/ng-components';
 import { ProductService, Produto } from '../services/produto.service';
 import { FormsModule } from '@angular/forms';
@@ -21,13 +24,15 @@ import { FormsModule } from '@angular/forms';
     PoDynamicModule, 
     FormsModule,
     PoTableModule,
-    PoPageModule
+    PoPageModule,
+    PoFieldModule,
+    PoButtonModule
   ],
   templateUrl: './product-form.component.html'
 })
 export class ProductFormComponent implements OnInit {
   
-  product: Partial<Produto> = {}; // Objeto que será ligado ao formulário
+  product: Partial<Produto> = {};
   isEdit = false;
   
   fields: Array<PoDynamicFormField> = [];
@@ -66,19 +71,12 @@ export class ProductFormComponent implements OnInit {
         format: 'BRL',
         required: true,
         gridColumns: 6
-      },
-      {
-        property: 'image',
-        label: 'Imagem (Base64)',
-        type: 'text',
-        help: 'Cole aqui a string Base64 da imagem do produto (opcional).',
-        gridColumns: 12
       }
+      // 🛑 Campo de imagem removido daqui. Será usado o componente po-upload.
     ];
   }
 
   checkIfEditing(): void {
-    // Captura o ID da rota (se estiver em modo /editar/:id)
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     
     if (id) {
@@ -99,10 +97,35 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  // 💡 NOVO MÉTODO: Converte o arquivo selecionado em Base64
+  handleFileInput(event: any): void {
+    const file: File = event.target.files[0];
+    
+    // ✅ console.log para confirmar o disparo
+    console.log('Evento Disparado com Input Nativo! Objeto File recebido:', file);
+    
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+            // Assumindo que a propriedade correta é 'image'
+            this.product.image = this.extractBase64(e.target.result as string);
+        };
+        
+        reader.readAsDataURL(file);
+    }
+}
+
+  // 💡 NOVO MÉTODO: Extrai a string Base64 sem o prefixo do MIME type
+  private extractBase64(base64String: string): string {
+    const parts = base64String.split(';base64,');
+    // Retorna apenas a parte da string Base64 pura
+    return parts.length > 1 ? parts[1] : base64String;
+  }
+
+
   save(): void {
-    // O Dynamic Form só dispara o submit se o formulário for válido.
     if (this.isEdit) {
-        // EDIÇÃO (PUT)
         this.productService.updateProduct(this.product as Produto).subscribe({
             next: () => {
                 this.poNotification.success('Produto atualizado com sucesso!');
@@ -114,8 +137,6 @@ export class ProductFormComponent implements OnInit {
             }
         });
     } else {
-        // CRIAÇÃO (POST)
-        // Garante que o ID não seja enviado na criação
         delete this.product.id; 
         this.productService.createProduct(this.product as Produto).subscribe({
             next: () => {

@@ -12,14 +12,14 @@ namespace ProdutosNetPoUi.Domain.Commands.ProdutoCommands
         public string Descricao { get; set; }
         public decimal Preco { get; set; }
         public string Id { get; set; }
-        public string image { get; set; }
+        public string Image { get; set; }
         public UpdateProdutoCommand() { }
 
         public UpdateProdutoCommand(string descricao, decimal preco, string image, string id)
         {
             this.Descricao = descricao;
             this.Preco = preco;
-            this.image = image;
+            this.Image = image;
             this.Id = id;
         }
 
