@@ -29,7 +29,7 @@ O destaque do Front-end é a utilização do **PO UI (Padrões de Interface Prot
 | **C#**                 | -      | Linguagem de programação principal.                               |
 | Entity Framework Core  | -      | ORM para persistência e manipulação dos dados.                    |
 | SQLite                 | -      | Banco de dados utilizado para persistência.                       |
-| Outras Características | -      | DDD, CQRS, Clean Architecture, MediatR, Flunt e Testes Unitários. |
+| Outras Características | -      | DDD, CQRS, Clean Architecture, MediatR, Flunt, Documentação com swagger e Testes Unitários. |
 
 ---
 
