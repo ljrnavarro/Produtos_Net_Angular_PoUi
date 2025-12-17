@@ -135,4 +135,4 @@ ng serve -o
 
 | Nome                | GitHub                                       |
 | :------------------ | :------------------------------------------- |
-| Lucas J. R. Navarro | [@ljrnavarro](https://github.com/ljrnavarro) |
+| Luiz J. R. Navarro | [@ljrnavarro](https://github.com/ljrnavarro) |
