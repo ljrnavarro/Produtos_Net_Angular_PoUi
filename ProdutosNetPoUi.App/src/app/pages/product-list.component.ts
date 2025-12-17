@@ -56,7 +56,7 @@ export class ProductListComponent implements OnInit {
   setupColumns(): void {
     this.columns = [
       { property: 'id', label: 'Código', width: '10%' },
-      { property: 'descricao', label: 'Descrição', width: '45%' },
+      { property: 'descricao', label: 'Descrição', width: '25%' },
       { 
         property: 'preco', 
         label: 'Preço', 
@@ -64,19 +64,12 @@ export class ProductListComponent implements OnInit {
         format: 'BRL', 
         width: '15%' 
       },
-      { 
-        property: 'imageStatus',
-        label: 'Imagem', 
-        type: 'label',
-        labels: [
-          { value: 'true', label: 'Sim', color: 'color-10', icon: 'po-icon-image' },
-          { value: 'false', label: 'Não', color: 'color-07', icon: 'po-icon-not-found' }
-        ]
-      },
+     
       {
     property: 'columnIcon',
       label: 'Actions',
-      type: 'icon',      
+      type: 'icon', 
+      width: '55%',        
       icons: [
         {
           icon: 'po-icon-edit', 
