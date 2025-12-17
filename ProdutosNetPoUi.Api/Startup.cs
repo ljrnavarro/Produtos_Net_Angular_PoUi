@@ -28,11 +28,19 @@ namespace ProdutosNetPoUi.Api
             // Add CORS policy
             services.AddControllers();
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200", "http://frontend:80")
+                              .AllowAnyMethod()
+                              .AllowAnyHeader()
+                              .AllowCredentials();
+                    });
+            });
 
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
-           // services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDbContext<DataContext>(opt => opt.UseSqlServer("Database"));
+            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));          
 
             services.AddTransient<IProdutoRepository, ProdutoRepository>();
 
@@ -40,35 +48,7 @@ namespace ProdutosNetPoUi.Api
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo { Title = "Produtos Online", Version = "v1" });
-            /*    x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = @"JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.
-                    Example: 'Bearer 12345abcdef'",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
-
-                x.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                    {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header,
-
-                        },
-                        new List<string>()
-                    }
-                    });*/
-
+           
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -80,23 +60,7 @@ namespace ProdutosNetPoUi.Api
             services.AddControllersWithViews()
             .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-
-          /*  services
-               .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-               .AddJwtBearer(options =>
-               {
-                   options.Authority = "https://securetoken.google.com/cursoonlie";
-                   options.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ValidateIssuer = true,
-                       ValidIssuer = "https://securetoken.google.com/cursoonlie",
-                       ValidateAudience = true,
-                       ValidAudience = "cursoonlie",
-                       ValidateLifetime = true
-                   };
-               });*/
-
-
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -115,6 +79,7 @@ namespace ProdutosNetPoUi.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowFrontend");
             app.UseCors(
                 options =>
                 options.

@@ -25,6 +25,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+	"Docker": {
+    "commandName": "Docker",
+    "launchBrowser": true,
+    "launchUrl": "{Scheme}://localhost:{Port}",
+    "environmentVariables": {
+      "ASPNETCORE_URLS": "http://+:8080"
     }
+  }
   }
 }

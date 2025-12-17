@@ -3,6 +3,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CONFIG } from '../config';
 
 // Sua interface
 export interface Produto {
@@ -16,7 +17,7 @@ export interface Produto {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'https://localhost:44320/api/v1/Produto'; // ⚠️ Ajuste a URL base conforme sua API
+  private apiUrl = CONFIG.apiUrl + '/produto';
 
   constructor(private http: HttpClient) { }
 
