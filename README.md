@@ -128,7 +128,6 @@ ng serve -o
 * Testes unitários e de integração no Front-end (Jasmine/Karma ou Jest)
 * Melhoria visual e padronização de layout com PO UI
 * Exibição da imagem do produto na `po-table`
-* Pipeline CI/CD com Docker
 
 ---
 
